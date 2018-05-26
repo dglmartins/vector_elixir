@@ -180,19 +180,22 @@ defmodule Vector do
   end
 
   @doc """
-  Checks if two vectors are the same
+  Checks if two vectors are the same to a tolerance defaulted to 1.0e-10
 
   ## Examples
 
-      iex> vec1 = Vector.new([1, 1, 1])
-      iex> vec2 = Vector.new([1, 1, 1])
-      iex> Vector.are_equal?(vec1, vec2)
+      iex> vec1 = Vector.new([1, 1, 1, 1, 1, 1, 1, 1, 1, 1.01])
+      iex> vec2 = Vector.new([1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+      iex> Vector.are_equal?(vec1, vec2, 1.0e-1)
       true
+      iex> Vector.are_equal?(vec1, vec2)
+      false
 
   """
-  def are_equal?(vector1, vector2) do
+  def are_equal?(vector1, vector2, tolerance \\ 1.0e-10) do
     Vector.minus(vector1, vector2).coordinates
-    |> Enum.reduce(0, fn({_, v}, acc) -> v + acc end) == 0
+    |> Enum.reduce(0, fn({_, v}, acc) -> v + acc end)
+    |> abs() <= tolerance
   end
 
   @doc """
