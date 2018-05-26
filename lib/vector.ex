@@ -236,11 +236,11 @@ defmodule Vector do
   """
   def are_orthogonal?(vector1, vector2, tolerance \\ 1.0e-10) do
     case {Vector.is_zero_vector?(vector1), Vector.is_zero_vector?(vector2)} do
-      {true, _} -> true
-      {_, true} -> true
       {false, false} ->
         Vector.dot_product(vector1, vector2)
         |> abs() < tolerance
+      _ ->
+        true
     end
   end
 
