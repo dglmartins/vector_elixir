@@ -214,12 +214,11 @@ defmodule Vector do
   """
   def are_parallel?(vector1, vector2) do
     case {Vector.is_zero_vector?(vector1), Vector.is_zero_vector?(vector2)} do
-      {true, _} -> true
-      {_, true} -> true
       {false, false} ->
         scalar = vector1.coordinates[0] / vector2.coordinates[0]
         Vector.times_scalar(vector2, scalar)
         |> Vector.are_equal?(vector1)
+      _ -> true
       end
   end
 
